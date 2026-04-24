@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Arte de Leer en Sociología</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --ink-light: #3d2f25;
+    --sepia: #8b6f47;
+    --sepia-light: #c4a97a;
+    --cream: #f5f0e8;
+    --cream-dark: #ede4d3;
+    --cream-mid: #f0e9d8;
+    --rust: #8b3a2a;
+    --rust-light: #b05a3f;
+    --gold: #c9973a;
+    --gold-light: #e0b86a;
+    --sage: #5a6e4a;
+    --border: #c4a97a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #d4c9b8;
+    font-family: 'Crimson Pro', Georgia, serif;
+    color: var(--ink);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: var(--cream);
+    position: relative;
+    box-shadow: 
+      0 0 0 1px #a89070,
+      4px 4px 20px rgba(0,0,0,0.25),
+      8px 8px 40px rgba(0,0,0,0.15);
+    overflow: hidden;
+  }
+
+  /* Texture overlay */
+  .page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.6;
+  }
+
+  /* Decorative top border */
+  .top-ornament {
+    background: var(--ink);
+    height: 6px;
+    width: 100%;
+  }
+
+  .top-stripe {
+    background: var(--rust);
+    height: 2px;
+    width: 100%;
+    margin-bottom: 2px;
+  }
+
+  /* Header */
+  .header {
+    padding: 28px 40px 20px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    background: linear-gradient(180deg, #ede6d5 0%, var(--cream) 100%);
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .discipline-tag {
+    font-family: 'Crimson Pro', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sepia);
+    border: 1px solid var(--sepia-light);
+    padding: 3px 10px;
+    background: transparent;
+  }
+
+  .guide-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    color: var(--sepia);
+    letter-spacing: 1px;
+    font-style: italic;
+  }
+
+  .header-title {
+    text-align: center;
+    padding: 8px 0 4px;
+  }
+
+  .main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+
+  .main-title em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .subtitle {
+    font-family: 'Lora', serif;
+    font-size: 13px;
+    color: var(--sepia);
+    font-style: italic;
+    margin-top: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  .ornamental-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0 0;
+    justify-content: center;
+  }
+
+  .ornamental-divider .line {
+    height: 1px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, var(--sepia-light));
+  }
+  .ornamental-divider .line:last-child {
+    background: linear-gradient(90deg, var(--sepia-light), transparent);
+  }
+
+  .ornamental-divider .symbol {
+    color: var(--gold);
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  /* Content layout */
+  .content {
+    padding: 22px 40px 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  /* Intro paragraph - full width */
+  .intro-block {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #ece4d0 0%, var(--cream-mid) 100%);
+    border: 1px solid var(--sepia-light);
+    padding: 14px 18px 14px 22px;
+    position: relative;
+  }
+
+  .intro-block::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--rust), var(--gold));
+  }
+
+  .intro-text {
+    font-family: 'Lora', serif;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--ink-light);
+    font-style: italic;
+    display: block;
+    width: 100%;
+  }
+
+  .intro-text strong {
+    font-style: normal;
+    color: var(--rust);
+    font-weight: 600;
+  }
+
+  /* Section cards */
+  .section-card {
+    border: 1px solid var(--border);
+    background: var(--cream-mid);
+    position: relative;
+    overflow: hidden;
+    break-inside: avoid;
+  }
+
+  .section-card.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .section-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(225deg, var(--cream-dark) 50%, transparent 50%);
+  }
+
+  .section-header {
+    padding: 10px 14px 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(90deg, var(--cream-dark) 0%, var(--cream-mid) 100%);
+  }
+
+  .section-icon {
+    width: 28px;
+    height: 28px;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .section-icon svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--cream);
+  }
+
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 9px;
+    color: var(--sepia);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    line-height: 1;
+    margin-bottom: 1px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .section-body {
+    padding: 12px 14px;
+  }
+
+  /* Steps list */
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .step-item {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 8px;
+    align-items: start;
+  }
+
+  .step-num {
+    width: 20px;
+    height: 20px;
+    background: var(--rust);
+    color: var(--cream);
+    font-family: 'Playfair Display', serif;
+    font-size: 9px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-content {
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .step-content strong {
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 12px;
+    display: block;
+    margin-bottom: 1px;
+  }
+
+  .step-content span {
+    color: var(--ink-light);
+    font-size: 11px;
+  }
+
+  /* Bullet list variant */
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .bullet-item {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 6px;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--ink-light);
+    align-items: start;
+  }
+
+  .bullet-item::before {
+    content: '◆';
+    font-size: 6px;
+    color: var(--gold);
+    margin-top: 4px;
+    line-height: 1;
+  }
+
+  .bullet-item strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Tip box */
+  .tip-box {
+    background: linear-gradient(135deg, #f7f0e0, #ede3cc);
+    border-left: 3px solid var(--gold);
+    padding: 8px 12px;
+    margin-top: 8px;
+    font-family: 'Lora', serif;
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--sepia);
+    line-height: 1.5;
+  }
+
+  .tip-box strong {
+    font-style: normal;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 9px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* Questions grid */
+  .questions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .question-pill {
+    background: var(--cream-dark);
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    font-size: 10.5px;
+    line-height: 1.45;
+    color: var(--ink-light);
+    position: relative;
+    padding-left: 18px;
+  }
+
+  .question-pill::before {
+    content: '?';
+    position: absolute;
+    left: 7px;
+    top: 6px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--rust);
+    font-weight: 700;
+  }
+
+  /* Phases row */
+  .phases-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .phase-item {
+    text-align: center;
+    padding: 8px 6px;
+    background: var(--cream-dark);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  .phase-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sepia);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .phase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--rust);
+    font-style: italic;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .phase-desc {
+    font-size: 10px;
+    line-height: 1.4;
+    color: var(--ink-light);
+  }
+
+  .phase-connector {
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 10px;
+    z-index: 2;
+  }
+
+  /* Tags row */
+  .tags-section {
+    margin-top: 8px;
+  }
+
+  .tags-label {
+    font-family: 'Crimson Pro', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sepia);
+    margin-bottom: 5px;
+  }
+
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tag {
+    font-family: 'Lora', serif;
+    font-size: 9.5px;
+    font-style: italic;
+    background: transparent;
+    border: 1px solid var(--sepia-light);
+    color: var(--ink-light);
+    padding: 3px 8px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 10px 40px 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%);
+  }
+
+  .footer-left {
+    font-family: 'Crimson Pro', serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sepia);
+  }
+
+  .footer-center {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .footer-dot {
+    width: 4px;
+    height: 4px;
+    background: var(--sepia-light);
+    transform: rotate(45deg);
+  }
+
+  .footer-right {
+    font-family: 'Lora', serif;
+    font-size: 9px;
+    font-style: italic;
+    color: var(--sepia);
+  }
+
+  .bottom-ornament {
+    height: 2px;
+    background: var(--rust);
+    width: 100%;
+  }
+
+  .bottom-stripe {
+    background: var(--ink);
+    height: 5px;
+    width: 100%;
+  }
+
+  /* Two-column section body */
+  .two-col-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .col-divider {
+    border-left: 1px dashed var(--border);
+    padding-left: 12px;
+  }
+
+  .col-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--sepia);
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  /* Annotation symbols legend */
+  .symbols-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    margin-bottom: 8px;
+  }
+
+  .symbol-item {
+    text-align: center;
+    padding: 5px 4px;
+    background: var(--cream-dark);
+    border: 1px solid var(--border);
+  }
+
+  .symbol-glyph {
+    font-size: 16px;
+    display: block;
+    line-height: 1.2;
+    color: var(--rust);
+  }
+
+  .symbol-desc {
+    font-size: 9px;
+    color: var(--ink-light);
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; width: 210mm; min-height: 297mm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="top-ornament"></div>
+  <div class="top-stripe"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="discipline-tag">Universidad Nacional de Colombia · Sociología</div>
+      <div class="guide-number">Guía de Lectura Académica · Joaquín L. Cortés</div>
+    </div>
+    <div class="header-title">
+      <div class="main-title">El Arte de Leer<br><em>en las Ciencias Sociales</em></div>
+      <div class="subtitle">De la página al pensamiento crítico: herramientas para el lector universitario</div>
+    </div>
+    <div class="ornamental-divider">
+      <div class="line"></div>
+      <div class="symbol">✦</div>
+      <div class="symbol" style="font-size:10px; color:var(--sepia)">◆</div>
+      <div class="symbol">✦</div>
+      <div class="line"></div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- INTRO -->
+    <div class="intro-block">
+      <div class="intro-text">
+        Todo texto académico es un <strong>acto intelectual situado</strong>, no un mensaje neutral. Quien lo escribe tiene una historia, una posición política, un método y unos interlocutores. Leer sociología implica aprender a leer <em>entre líneas</em>: preguntarse no solo <em>qué</em> dice el autor, sino <em>desde dónde</em>, <em>para quién</em> y <em>contra quién</em> lo dice.
+      </div>
+    </div>
+
+    <!-- BLOQUE 1: Antes de leer -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        </div>
+        <div>
+          <span class="section-num">Paso I</span>
+          <div class="section-title">Antes de leer:<br><em>El autor y su posición</em></div>
+        </div>
+      </div>
+      <div class="section-body">
+        <ul class="steps-list">
+          <li class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <strong>Indagar al autor</strong>
+              <span>¿A qué institución pertenece? ¿Universidad pública o privada? ¿De qué país? Las afiliaciones revelan recursos, audiencias y compromisos.</span>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <strong>Identificar la tradición teórica</strong>
+              <span>¿Es marxista, funcionalista, feminista, poscolonial? Cada tradición tiene preguntas que formula y preguntas que ignora.</span>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <strong>Rastrear los sesgos explícitos</strong>
+              <span>No existe ciencia neutral. Conviene preguntar: ¿qué grupos sociales aparecen como sujetos? ¿Cuáles como objetos? ¿Quién no aparece?</span>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <strong>Fecha y contexto histórico</strong>
+              <span>Un texto de 1970 sobre "el desarrollo" no es lo mismo que uno de 2010. Los conceptos envejecen y se politizan.</span>
+            </div>
+          </li>
+        </ul>
+        <div class="tip-box">
+          <strong>Consejo práctico</strong>
+          Antes de abrir el libro, busca en Google Scholar el nombre del autor + "entrevista" o "posición política". Tres minutos de contexto valen más que releer el texto sin brújula.
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 2: El texto en contexto -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+        </div>
+        <div>
+          <span class="section-num">Paso II</span>
+          <div class="section-title">El texto en contexto:<br><em>¿Dónde y para qué?</em></div>
+        </div>
+      </div>
+      <div class="section-body">
+        <ul class="bullet-list">
+          <li class="bullet-item"><div><strong>Tipo de publicación:</strong> ¿Artículo de revista con arbitraje, capítulo de libro, ensayo de opinión, tesis? El rigor esperado varía.</div></li>
+          <li class="bullet-item"><div><strong>La revista o editorial:</strong> ¿Tiene línea ideológica? <em>New Left Review</em> no es igual que <em>American Sociological Review</em>.</div></li>
+          <li class="bullet-item"><div><strong>El debate al que responde:</strong> Busca las notas al pie y la bibliografía. Un texto es siempre una respuesta a otros textos. ¿Con quién discute el autor?</div></li>
+          <li class="bullet-item"><div><strong>El público destinatario:</strong> ¿Escribe para académicos, para políticos, para activistas? Eso moldea el lenguaje y los argumentos.</div></li>
+          <li class="bullet-item"><div><strong>Financiamiento e intereses:</strong> En investigaciones empíricas, ¿quién financió el estudio? Fondos privados pueden orientar resultados.</div></li>
+        </ul>
+        <div class="tags-section">
+          <div class="tags-label">Preguntas clave para contextualizar</div>
+          <div class="tags-row">
+            <span class="tag">¿Cuándo fue escrito?</span>
+            <span class="tag">¿Dónde fue publicado?</span>
+            <span class="tag">¿A quién cita?</span>
+            <span class="tag">¿Quién lo cita?</span>
+            <span class="tag">¿Qué silencios hay?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 3: Estrategia de lectura (full width) -->
+    <div class="section-card full-width">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+        </div>
+        <div>
+          <span class="section-num">Paso III</span>
+          <div class="section-title">Las tres fases de una lectura productiva</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="phases-row">
+          <div class="phase-item">
+            <span class="phase-label">Primera lectura</span>
+            <span class="phase-title">Vuelo de pájaro</span>
+            <div class="phase-desc">Lee título, abstract, introducción y conclusiones. Identifica la tesis central antes de entrar al cuerpo. No te atasques en argumentos complejos todavía.</div>
+            <span class="phase-connector">→</span>
+          </div>
+          <div class="phase-item">
+            <span class="phase-label">Segunda lectura</span>
+            <span class="phase-title">Lectura analítica</span>
+            <div class="phase-desc">Lee el texto completo. Subraya la tesis, los argumentos principales y la evidencia. Anota en los márgenes tus dudas y resistencias. Busca las palabras que no entiendes.</div>
+            <span class="phase-connector">→</span>
+          </div>
+          <div class="phase-item">
+            <span class="phase-label">Tercera lectura</span>
+            <span class="phase-title">Lectura crítica</span>
+            <div class="phase-desc">Dialoga con el texto. ¿Es coherente la evidencia con la tesis? ¿Qué contraejemplos existen? ¿Cómo se relaciona con otros textos que conoces?</div>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>Para textos difíciles</strong>
+          Si un capítulo se resiste, lee primero la última página. En sociología, los autores suelen reservar sus concesiones y limitaciones para el final — eso te da el mapa del territorio antes del viaje.
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 4: Trucos para capítulos y artículos -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 18h12v-2H3v2zm0-5h12v-2H3v2zm0-7v2h12V6H3zm17 9.59L17.42 12 20 9.41 18.59 8l-4 4 4 4L20 14.59z"/></svg>
+        </div>
+        <div>
+          <span class="section-num">Paso IV</span>
+          <div class="section-title">Trucos para capítulos<br><em>y artículos académicos</em></div>
+        </div>
+      </div>
+      <div class="section-body">
+        <ul class="steps-list">
+          <li class="step-item">
+            <div class="step-num">A</div>
+            <div class="step-content">
+              <strong>El truco del "argumento en una frase"</strong>
+              <span>Después de cada sección, escribe en tus propias palabras qué argumentó el autor. Si no puedes hacerlo, no lo entendiste todavía.</span>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">B</div>
+            <div class="step-content">
+              <strong>Distingue tesis de evidencia</strong>
+              <span>La tesis es lo que el autor afirma. La evidencia es lo que usa para sostenerlo. Muchos textos parecen confusos cuando se mezclan estos dos niveles.</span>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">C</div>
+            <div class="step-content">
+              <strong>Sigue el concepto ancla</strong>
+              <span>Cada texto sociológico tiene 1–3 conceptos que carga con el peso del argumento. Identifícalos en la introducción y síguelos a lo largo del texto.</span>
+            </div>
+          </li>
+          <li class="step-item">
+            <div class="step-num">D</div>
+            <div class="step-content">
+              <strong>Usa la bibliografía como mapa</strong>
+              <span>Los textos más citados en la bibliografía son los que el autor considera sus aliados. Leer un par de ellos te sitúa en la conversación intelectual.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BLOQUE 5: Sistema de anotación -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        <div>
+          <span class="section-num">Paso V</span>
+          <div class="section-title">Sistema de anotación<br><em>en el margen</em></div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="symbols-grid">
+          <div class="symbol-item">
+            <span class="symbol-glyph">★</span>
+            <div class="symbol-desc">Idea central o tesis del autor</div>
+          </div>
+          <div class="symbol-item">
+            <span class="symbol-glyph">?</span>
+            <div class="symbol-desc">No entiendo, necesito buscar</div>
+          </div>
+          <div class="symbol-item">
+            <span class="symbol-glyph">!</span>
+            <div class="symbol-desc">Sorprende o contradice lo esperado</div>
+          </div>
+          <div class="symbol-item">
+            <span class="symbol-glyph">≠</span>
+            <div class="symbol-desc">Contradice otro texto o autor</div>
+          </div>
+          <div class="symbol-item">
+            <span class="symbol-glyph">→</span>
+            <div class="symbol-desc">Lleva a una conclusión importante</div>
+          </div>
+          <div class="symbol-item">
+            <span class="symbol-glyph">✗</span>
+            <div class="symbol-desc">No estoy de acuerdo, debatible</div>
+          </div>
+          <div class="symbol-item">
+            <span class="symbol-glyph">↔</span>
+            <div class="symbol-desc">Relacionar con otro concepto</div>
+          </div>
+          <div class="symbol-item">
+            <span class="symbol-glyph">[ ]</span>
+            <div class="symbol-desc">Posible cita para trabajos</div>
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>Nota metodológica</strong>
+          Anota siempre en lápiz o en nota al margen digital —nunca subrayes sin escribir por qué. Un subrayado sin comentario no es comprensión: es ilusión de lectura.
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 6: Preguntas para el debate (full width) -->
+    <div class="section-card full-width">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1-4.5h-2c0-2.25 2.25-2.08 2.25-3.5C13.25 5.84 12.48 5 11.5 5c-.98 0-1.75.77-1.75 1.75H7.75C7.75 4.49 9.24 3 11.5 3c2.24 0 3.75 1.49 3.75 3.25C15.25 8.33 13 8.58 13 10z"/></svg>
+        </div>
+        <div>
+          <span class="section-num">Paso VI</span>
+          <div class="section-title">Preguntas para activar el pensamiento crítico</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="questions-grid">
+          <div class="question-pill">¿Qué problema social intenta explicar este texto y desde qué escala lo aborda?</div>
+          <div class="question-pill">¿Qué grupo social queda excluido o invisibilizado en este análisis?</div>
+          <div class="question-pill">¿La evidencia que usa el autor es coherente con su marco teórico?</div>
+          <div class="question-pill">¿Este texto podría aplicarse al contexto colombiano o latinoamericano?</div>
+          <div class="question-pill">¿Qué le respondería un autor de tradición contraria a este argumento?</div>
+          <div class="question-pill">¿Cómo ha envejecido este argumento desde que fue publicado?</div>
+          <div class="question-pill">¿Qué supuestos tácitos da por sentados el autor sin argumentarlos?</div>
+          <div class="question-pill">¿Qué implicaciones políticas tiene aceptar este argumento como verdadero?</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">Universidad Nacional de Colombia · Sociología</div>
+    <div class="footer-center">
+      <div class="footer-dot"></div>
+      <div class="footer-dot"></div>
+      <div class="footer-dot"></div>
+    </div>
+    <div class="footer-right">«Leer es siempre un acto político»</div>
+  </div>
+  <div class="bottom-ornament"></div>
+  <div class="bottom-stripe"></div>
+
+</div>
+</body>
+</html>
